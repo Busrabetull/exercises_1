@@ -1,0 +1,271 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+#değişken türlerinin ayarlanması
+library(tidyverse )
+
+df <- mpg
+df$class <- factor(df$class)
+
+glimpse(df)
+
+df$disp_yeni <- ifelse(df$displ > 2,1,0)
+
+df$disp_yeni <- factor(df$disp_yeni)
+
+```
+
+```{r}
+glimpse(df)
+
+
+
+```
+
+```{r}
+fivenum(df$displ)
+
+```
+kategorik değişkenlere bakmak için:
+```{r}
+
+levels(df$class)
+```
+```{r}
+psych::headTail(df)
+
+```
+```{r}
+install.package(psych)
+
+library(psych)
+```
+```{r}
+install.packages(devtools)
+library(devtools)
+
+?`devtools-package`
+
+```
+```{r}
+?getwd()
+```
+```{r}
+install_local("C:/Users/busra/OneDrive/Masaüstü/R studio/giris/funModeling")
+
+```
+```{r}
+?library(funModeling)
+
+profiling_num(df)
+plot_num(df)
+?funModeling
+
+```
+
+
+```{r}
+browseVignettes(package = "funModeling")
+
+```
+
+
+```{r}
+
+
+library(dplyr)
+data(heart_disease)
+
+df <- df_status(heart_disease)
+
+df <- df_status(heart_disease, print_results = F)
+df
+
+removed_df <- filter(df, p_zeros > 60) %>% .$variable
+removed_df
+```
+
+```{r}
+df_2 <- select(heart_disease, -one_of(removed_df))
+
+df_2
+```
+
+```{r}
+
+arrange(df, -p_zeros) %>% select(variable, q_zeros, p_zeros)
+```
+```{r}
+freq(df)
+?freq
+```
+
+
+```{r}
+library(psych)
+describe(mpg$displ)
+
+```
+```{r}
+library(Hmisc)
+Hmisc::describe(mpg$displ)
+```
+```{r}
+library(pastecs)
+stat.desc(mpg)
+
+
+describe.by(df, df$trans)
+
+df <-  select(mpg,trans,cty,cyl,hwy)
+```
+```{r}
+mpg
+```
+
+
+
+```{r}
+install.packages("d3Tree")
+library(d3Tree)
+
+d3tree(list(root = df2tree(rootname = "mpg",
+                           struct = as.data.frame(mpg),
+                           layout = "collapse")))
+
+       
+
+```
+```{r}
+
+install.packages("data.tree")
+
+library(data.tree)
+?data.tree
+
+vignette("applications", package = "data.tree")
+```
+
+```{r}
+acme <- Node$new("Acme Inc.")
+  accounting <- acme$AddChild("Accounting")
+    software <- accounting$AddChild("New Software")
+    standards <- accounting$AddChild("New Accounting Standards")
+  research <- acme$AddChild("Research")
+    newProductLine <- research$AddChild("New Product Line")
+    newLabs <- research$AddChild("New Labs")
+  it <- acme$AddChild("IT")
+    outsource <- it$AddChild("Outsource")
+    agile <- it$AddChild("Go agile")
+    goToR <- it$AddChild("Switch to R")
+
+print(acme)
+```
+
+```{r}
+
+root <- Node$new("CEO")
+
+birim1 <- root$AddChild("Birim Müdürü 1")
+ birim1$AddChild("Çalışan 1")
+ birim1$AddChild("Çalışan 2")
+ 
+birim2 <- root$AddChild("Birim Müdürü 2")
+ birim2$AddChild("Çalışan 3")
+
+print(root)
+
+```
+
+```{r}
+
+soy_agacı <- Node$new("Büyük Baba ve Büyük Anne")
+
+ evlat <- soy_agacı$AddChild("Anne ve Baba")
+  evlat$AddChild("çocuk1")
+  evlat$AddChild("çocuk2")
+  evlat$AddChild("çocuk3")
+  
+ bekar_evlat <- soy_agacı$AddChild("Amca ve Hala")
+ 
+ print(soy_agacı)
+
+
+plot(soy_agacı)
+
+install.packages("DiagrammeR")
+library(DiagrammeR)
+
+```
+
+```{r}
+data(df)
+head(df)
+
+df$pathString <- paste("tree",
+                       df$cty,
+                       df$cyl,
+                    
+                       sep = "/")
+
+hwy <- as.Node(df)
+print(hwy, "trans")
+
+plot(hwy)
+                    
+```
+
+
+
+```{r}
+soy_agacı$height
+soy_agacı$count
+soy_agacı$attributes
+soy_agacı$attributesAll
+
+acme
+```
+```{r}
+
+
+as.data.frame(acme)
+plot(acme)
+
+```
+
+```{r}
+
+library(d3Tree)
+
+d3tree(list(root = df2tree(rootname = "mpg",
+                           struct = as.data.frame(mpg)),
+                           layout = "collapse"))
+
+```
+
+
+```{r}
+
+d3tree(list(root = df2tree(rootname = "Titanic",
+                           struct = as.data.frame(Titanic)),
+                           layout = "collapse"))
+
+
+
+```
+
+
+
+```{r}
+
+devtools::install_github("rsquaredacademy/xplorerr")
+library(xplorerr)
+
+```
+
+
